@@ -5,7 +5,9 @@ final class AppCoordinator {
     private let window: UIWindow
 
     private lazy var navigationController: UINavigationController = {
-        UINavigationController()
+        let navController = UINavigationController()
+        navController.setNavigationBarHidden(true, animated: false)
+        return navController
     }()
 
     init(window: UIWindow?) {
@@ -13,11 +15,13 @@ final class AppCoordinator {
     }
 
     func start() {
-        window.makeKeyAndVisible()
-        window.rootViewController = DependencyContainer.resolver.resolve(
+        DependencyContainer.resolver.resolve(
             PostsCoordinatorInput.self,
             argument: (navigationController as UINavigationController)
         )?.start()
+
+        window.makeKeyAndVisible()
+        window.rootViewController = navigationController
     }
 
 }

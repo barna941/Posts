@@ -1,7 +1,7 @@
 import UIKit
 
 protocol PostsCoordinatorInput: AnyObject {
-    func start() -> UIViewController
+    func start()
 }
 
 final class PostsCoordinator: PostsCoordinatorInput {
@@ -14,8 +14,8 @@ final class PostsCoordinator: PostsCoordinatorInput {
         self.sceneFactory = sceneFactory
     }
 
-    func start() -> UIViewController {
-        sceneFactory.postsViewController(coordinator: self)
+    func start() {
+        navigationController.pushViewController(sceneFactory.postsViewController(coordinator: self), animated: true)
     }
 
 }

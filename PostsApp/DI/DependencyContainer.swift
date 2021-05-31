@@ -1,3 +1,4 @@
+import Alamofire
 import Swinject
 
 final class DependencyContainer {
@@ -8,7 +9,6 @@ final class DependencyContainer {
     }
 
     static func registerDependencies() {
-        // Posts
         container.register(PostsCoordinatorInput.self) { r, navigationController in
             PostsCoordinator(
                 navigationController: navigationController,
@@ -24,8 +24,20 @@ final class DependencyContainer {
                 interactor: r.resolve(PostsInteractorInput.self)!
             )
         }
-        container.register(PostsInteractorInput.self) { _ in
-            PostsInteractor()
+        container.register(PostsInteractorInput.self) { r in
+            PostsInteractor(postApi: r.resolve(PostApiInput.self)!)
+        }
+        container.register(Alamofire.RequestAdapter.self, name: PostsRequestAdapter.injectionKey) { _ in
+            PostsRequestAdapter()
+        }
+        container.register(EnvironmentProviderInput.self) { _ in
+            EnvironmentProvider()
+        }
+        container.register(PostApiInput.self) { r in
+            PostApi(
+                environmentProvider: r.resolve(EnvironmentProviderInput.self)!,
+                requestBuilderFactory: PostsRequestBuilderFactory()
+            )
         }
     }
 }

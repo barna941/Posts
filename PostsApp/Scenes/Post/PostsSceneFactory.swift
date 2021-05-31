@@ -9,7 +9,9 @@ final class PostsCoordinatorSceneFactory: PostsCoordinatorSceneFactoryInput {
             PostsPresenterInput.self,
             argument: coordinator
         )!
-        return PostsViewController(presenter: presenter)
+        let viewController = PostsViewController(presenter: presenter)
+        presenter.view = viewController
+        return viewController
     }
 
 }
