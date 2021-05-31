@@ -1,10 +1,10 @@
 import UIKit
 
 protocol PostsCoordinatorInput: AnyObject {
-    func start()
+    func start() -> UIViewController
 }
 
-final class PostsCoordinatorCoordinator: PostsCoordinatorInput {
+final class PostsCoordinator: PostsCoordinatorInput {
 
     private let navigationController: UINavigationController
     private let sceneFactory: PostsCoordinatorSceneFactoryInput
@@ -14,7 +14,8 @@ final class PostsCoordinatorCoordinator: PostsCoordinatorInput {
         self.sceneFactory = sceneFactory
     }
 
-    func start() {
+    func start() -> UIViewController {
+        sceneFactory.postsViewController(coordinator: self)
     }
 
 }

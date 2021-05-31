@@ -23,7 +23,9 @@ final class PostsViewController: UIViewController {
         localizeViews()
     }
 
-    private func customizeViews() {}
+    private func customizeViews() {
+        view.backgroundColor = .cyan
+    }
 
     private func localizeViews() {}
 }
